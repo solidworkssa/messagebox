@@ -1,0 +1,12 @@
+[project]
+name = "messagebox"
+description = "On-chain encrypted messaging"
+authors = ["solidworkssa"]
+telemetry = false
+cache_dir = ".cache"
+
+[contracts.messagebox]
+path = "contracts/messagebox.clar"
+
+[repl.analysis]
+passes = ["check_checker"]
