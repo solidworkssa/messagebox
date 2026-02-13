@@ -1,13 +1,18 @@
-;; MessageBox
+;; MessageBox Clarity Contract
+;; Encrypted on-chain messaging service.
 
-(define-map data principal uint)
-(define-data-var counter uint u0)
 
-(define-public (store (value uint))
-    (ok (map-set data tx-sender value)))
+(define-map messages
+    {recipient: principal, index: uint}
+    {sender: principal, content: (string-utf8 256)}
+)
+(define-map message-count principal uint)
 
-(define-read-only (retrieve (user principal))
-    (ok (default-to u0 (map-get? data user))))
+(define-public (send (recipient principal) (content (string-utf8 256)))
+    (let ((count (default-to u0 (map-get? message-count recipient))))
+        (map-set messages {recipient: recipient, index: count} {sender: tx-sender, content: content})
+        (map-set message-count recipient (+ count u1))
+        (ok true)
+    )
+)
 
-(define-public (increment-counter)
-    (ok (var-set counter (+ (var-get counter) u1))))
