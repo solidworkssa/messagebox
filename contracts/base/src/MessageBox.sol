@@ -2,8 +2,11 @@
 pragma solidity ^0.8.20;
 
 /// @title MessageBox Contract
+/// @author solidworkssa
 /// @notice Encrypted on-chain messaging service.
 contract MessageBox {
+    string public constant VERSION = "1.0.0";
+
 
     struct Message {
         address sender;
